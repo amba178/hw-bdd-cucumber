@@ -20,38 +20,39 @@ end
 
 When /^I check the following ratings: (.*)/ do |rating_list|
   rating_list.split(", ").each do |rating|
-      check("ratings_#{rating}")
+      step %Q{I check "ratings_#{rating}"}
   end
 end
 
 When /^I uncheck the following ratings: (.*)/ do |rating_list|
   rating_list.split(", ").each do |rating|
-      uncheck("ratings_#{rating}")
+      step %Q{I uncheck "ratings_#{rating}"}
   end
 end
 
 Then /^I should see the following ratings: (.*)/ do |rating_list|
   rating_list.split(", ").each do |text|  
-     page.find('#movies').has_content?("<td>#{text}<td>")
+     # byebug
+     step %Q{I should see "#{text}"}
   end
 
 end
 
 Then /^I should not see the following ratings: (.*)/ do |rating_list|
   rating_list.split(", ").each do |text|
-    page.find('#movies').has_no_content?("<td>#{text}<td>")
+    step %Q{I should not see "#{page.body=~/^text$/}"}
   end
 end
 
 When(/^I check all movies$/) do
   @movies.pluck(:rating).uniq.each do |rating| 
-    check("ratings_#{rating}")
+    step %Q{I check "ratings_#{rating}"}
   end
 end
  
 Then /^I should see all the movies/ do
-  @movies.pluck(:rating).each do |text|
-    page.find('#movies').has_content?("<td>#{text}<td>")
+  @movies.each do |movie|
+    step %Q{I should see "#{movie.title}"}
   end
 end
 
