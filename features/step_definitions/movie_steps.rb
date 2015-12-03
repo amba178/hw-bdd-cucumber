@@ -40,7 +40,7 @@ end
 
 Then /^I should not see the following ratings: (.*)/ do |rating_list|
   rating_list.split(", ").each do |text|
-    step %Q{I should not see "#{page.body=~/^text$/}"}
+    (page.body=~/\Atext\z/) == nil 
   end
 end
 
